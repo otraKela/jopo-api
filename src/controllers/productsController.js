@@ -6,26 +6,26 @@ const controller = {
 
     list: (req, res) => {
 
-    // Accepts a query string with:
-    //  page=N  returns page number N, considering 10 products per page
-    //  search=KEYWORD  returns products containing KEYWORD in name, description, category name or color
-    // With no query string, returns all products
+      // Accepts a query string with:
+      //  page=N  returns page number N, considering 10 products per page
+      //  search=KEYWORD  returns products containing KEYWORD in name, description, category name or color
+      // With no query string, returns all products
 
         let productArray = [];
         let countByCategory = [];
         let findParameters = {};
         
-    // include clause to use in findAll        
+      // include clause to use in findAll        
         findParameters.include = [ {association: 'colors'}, {association: 'product_category'} ];
     
-    // // offset clause to use in findAll
+      // offset clause to use in findAll
         if ( req.query.page ) {
             findParameters.offset = (req.query.page - 1) * 10;
             findParameters.limit = 10;
 
         } 
 
-    // where clause to use in findAll
+      // where clause to use in findAll
         if (req.query.search != null && req.query.search != '') { 
             let keyword = `%${req.query.search}%`;
         
@@ -43,11 +43,6 @@ const controller = {
         
         }
         
-
-        // order by category_id and name
-        // findParameters.order = [ ['product_category', 'name'], 'name' ];
-
-        // order by product id
         findParameters.order = [ 'id' ];
 
         const getProducts = db.Products
@@ -61,7 +56,7 @@ const controller = {
         Promise.all ( [ getProducts, getCategories] )
             .then ( ([ products, categories ]) => {
 
-            // products array
+                // products array
                 products.forEach ( product => {
                     let productData = {
                         id: product.id, 
@@ -80,7 +75,7 @@ const controller = {
                     productArray.push ( productData );
                 })
             
-            // countByCategory 
+                // countByCategory 
                 categories.forEach ( category => {
                     let data={
                         name: category.name,
@@ -90,7 +85,7 @@ const controller = {
                 countByCategory.push(data);
                 })
 
-            // result
+                // result
                 let data = {
                     count: products.length,
                     countByCategory: countByCategory,
@@ -149,7 +144,7 @@ const controller = {
 
     categoryList: (req, res) => {
 
-//                const getCategories =   
+                // const getCategories =   
                 db.Product_Categories.findAll()
                 .then ( ( categories) => {
                 return res.status(200).json ( 

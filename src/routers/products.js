@@ -1,12 +1,12 @@
 const express = require ('express');
 
-const productsApiController = require ('../controllers/productsController');
+const productsController = require ('../controllers/productsController');
 
 const router = express.Router();
 
-router.get ( '/', productsApiController.list );
-router.get ( '/categories', productsApiController.categoryList );
-router.get ( '/:id', productsApiController.detail );
+router.get ( '/', productsController.list );
+router.get ( '/categories', productsController.categoryList );
+router.get ( '/:id', productsController.detail );
  
 
 module.exports = router;
