@@ -90,10 +90,14 @@ const controller = {
         // Insertar comparación del token generado con el guardado y devolver autorización aprobada o denegada
         
         return res.status(200).json(
-          {
-            payload: jwtPayload,
-            token: token
+          {  
+            status: 200,        
+            user: {
+              email: user.email,
+              first_name: user.first_name,
+              token: token
           }
+}
         )
       }
 
