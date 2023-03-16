@@ -65,8 +65,11 @@ const controller = {
         where: { email: req.body.email }
       });
 
-      let passwordCorrect = user === null
-        ? false :
+      let passwordCorrect = 
+        user === null
+        ? 
+        false 
+        :
         await bcrypt.compare(req.body.password, user.password);
 
       if (!passwordCorrect) {
@@ -80,30 +83,20 @@ const controller = {
       } else {
 
         let jwtPayload = {
-          email: user.email,
-          firstName: user.first_name,
-          lastName: user.last_name
+          userEmail: user.email,
+          userName: user.first_name,
+          userId: user.id
         }
 
         const token = jwt.sign(jwtPayload, process.env.SECRET);
 
-        // Insertar comparación del token generado con el guardado y devolver autorización aprobada o denegada
-        
         return res.status(200).json(
           {  
-            status: 200,        
-            user: {
-              email: user.email,
-              first_name: user.first_name,
-              token: token
-          }
-}
-        )
+            status: 200,     
+            jwt: token,  
+        })
       }
-
-
     }
-
     catch { e => console.error(e) }
   },
 
