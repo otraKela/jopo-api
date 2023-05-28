@@ -1,5 +1,4 @@
 const db = require('../database/models')
-const Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -16,7 +15,7 @@ const controller = {
           {
             meta: {
               status: 401,
-              msg: "The email has already been registered"
+              msg: "La dirección de mail ya se encuentra registrada"
             }
           });
       };
@@ -24,31 +23,41 @@ const controller = {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
       newUser = await db.Users.create({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
         date_birth: req.body.date_birth,
         // img: req.file.filename,
         category_id: 2
-      });
+      })
 
       if (await newUser) {
+
+        let jwtPayload = {
+          userEmail: newUser.email,
+          userName: newUser.first_name,
+          userId: newUser.id
+        }
+
+        const token = jwt.sign(jwtPayload, process.env.SECRET);
+        
         return res.status(200).json(
           {
             meta: {
               status: 200,
-              msg: 'User registration completed successfully'
+              msg: 'El registro del usuario ha sido completado'
             },
-            data: newUser
+            data: newUser,
+            jwt: token
           })
       } else {
-        return res.status(401).json(
+        return res.status(402).json(
           {
             meta: {
-              status: 401,
-              msg: `User registration couldn't be completed`
+              status: 402,
+              msg: `Ha ocurrido un error en el registro del usuario`
             }
           })
       }
