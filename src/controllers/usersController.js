@@ -10,7 +10,7 @@ const obtainJwt = require ('../services/obtainJwt');
 const controller = {
 
   registration: async (req, res) => {
-
+console.log('en registration')
     if (!req.body) {
       return res.status(402).json(
         {
@@ -25,7 +25,7 @@ const controller = {
 
       let newUser;
       let userImg;
-
+console.log('linea 28')
       if (await db.Users.findOne({ where: { email: req.body.email } })) {
         return res.status(401).json(
           {
@@ -35,7 +35,7 @@ const controller = {
             }
           });
       };
-
+console.log('linea 38')
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
       // Si no se ingresó una imagen se asigna la imagen por defecto
@@ -44,7 +44,7 @@ const controller = {
       } else {
         userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
       }
-
+console.log('linea 47')
       newUser = await db.Users.create({
         first_name: req.body.firstName,
         last_name: req.body.lastName,
@@ -55,7 +55,7 @@ const controller = {
         img: userImg,
         category_id: 2
       })
-
+console.log('linea 58')
       if (await newUser) {
 
         const token = obtainJwt (newUser);
