@@ -19,6 +19,12 @@ app.use(cors());
 const productsApiRouter = require('./src/routers/products.js');;
 const usersApiRouter= require('./src/routers/users.js')
 
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next()
+});
+
 // API routes
 app.use ( '/products', productsApiRouter);
 app.use ( '/users', usersApiRouter);
