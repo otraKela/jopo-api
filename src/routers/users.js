@@ -8,8 +8,7 @@ const imageUploadMiddleware = require ('../middleware/imageUploadMiddleware.js')
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200 
+ 'Access-Control-Allow-Origin': '*'
 }
 
 
