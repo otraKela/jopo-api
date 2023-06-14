@@ -1,14 +1,30 @@
 const db = require('../database/models')
+
+const envVariables= require('../../env-variables.json');
+const nodeEnv = process.env.NODE_ENV || 'development';
+
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
+const obtainJwt = require ('../services/obtainJwt');
 
 const controller = {
 
   registration: async (req, res) => {
 
+    if (!req.body) {
+      return res.status(402).json(
+        {
+          meta: {
+            status: 402,
+            msg: "No hay datos del usuario"
+          }
+        });
+    }
+
     try {
 
       let newUser;
+      let userImg;
 
       if (await db.Users.findOne({ where: { email: req.body.email } })) {
         return res.status(401).json(
@@ -22,6 +38,13 @@ const controller = {
 
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
+      // Si no se ingresó una imagen se asigna la imagen por defecto
+      if (req.body.img && !(req.body.img === null) && !(req.body.img === 'null') ) {
+        userImg = req.body.img;
+      } else {
+        userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
+      }
+
       newUser = await db.Users.create({
         first_name: req.body.firstName,
         last_name: req.body.lastName,
@@ -29,27 +52,20 @@ const controller = {
         password: hashedPassword,
         phone: req.body.phone,
         date_birth: req.body.date_birth,
-        // img: req.file.filename,
+        img: userImg,
         category_id: 2
       })
 
       if (await newUser) {
 
-        let jwtPayload = {
-          userEmail: newUser.email,
-          userName: newUser.first_name,
-          userId: newUser.id
-        }
-
-        const token = jwt.sign(jwtPayload, process.env.SECRET);
-        
+        const token = obtainJwt (newUser);
+      
         return res.status(200).json(
           {
             meta: {
               status: 200,
               msg: 'El registro del usuario ha sido completado'
             },
-            data: newUser,
             jwt: token
           })
       } else {
@@ -91,13 +107,7 @@ const controller = {
           });
       } else {
 
-        let jwtPayload = {
-          userEmail: user.email,
-          userName: user.first_name,
-          userId: user.id
-        }
-
-        const token = jwt.sign(jwtPayload, process.env.SECRET);
+        const token = obtainJwt (user);
 
         return res.status(200).json(
           {  
@@ -107,14 +117,6 @@ const controller = {
       }
     }
     catch { e => console.error(e) }
-  },
-
-  logout: (req, res) => {
-    req.session.userLogged = null;
-    res.clearCookie('remember_user');
-    res.clearCookie('userLogged');
-
-    return res.redirect('/');
   },
 
   list: (req, res) => {
@@ -179,6 +181,7 @@ const controller = {
       })
       .catch(e => console.log(e))
   },
+
 
 }
 

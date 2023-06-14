@@ -1,0 +1,12 @@
+{
+  "development": {
+    "SECRET": "messi",
+    "PROFILE_PICTURE_FOLDER": "C:/Users/Guido/Documents/Programacion/Portfolio/jopo-react/public/images/users",
+    "DEFAULT_USER_IMAGE": "images/users/default-user.png"
+  },
+
+  "production": {
+    "SECRET": "messi",
+    "DEFAULT_USER_IMAGE": "https://i.ibb.co/dDkqj3B/default-user.png"
+   }
+}
