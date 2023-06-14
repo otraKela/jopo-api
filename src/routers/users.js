@@ -8,9 +8,12 @@ const imageUploadMiddleware = require ('../middleware/imageUploadMiddleware.js')
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const corsOptions = {
- 'Access-Control-Allow-Origin': '*'
+  origin: 'https://jopo-react.netlify.app/',
+  preflightContinue,
+  optionsSuccessStatus: 200 
 }
 
+router.options('*', cors());
 
 router.get ( '/', usersController.list );
 router.get ( '/:id', usersController.detail );
@@ -23,8 +26,8 @@ if (nodeEnv === "development") {
                 usersController.registration );
 } else {
   router.post ( '/registration', 
-                cors(corsOptions),
-                usersController.registration );
+              cors(corsOptions),
+              usersController.registration );
 }
 
 
