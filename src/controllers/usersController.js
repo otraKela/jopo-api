@@ -29,6 +29,9 @@ console.log('linea 28')
       if (await db.Users.findOne({ where: { email: req.body.email } })) {
         return res.status(401).json(
           {
+            headers: {
+              "Access-Control-Allow-Origin": "*"
+            },
             meta: {
               status: 401,
               msg: "La dirección de mail ya se encuentra registrada"
