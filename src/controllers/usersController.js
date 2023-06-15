@@ -30,7 +30,7 @@ console.log('linea 28')
         return res.status(401).json(
           {
             headers: {
-              "Access-Control-Allow-Origin": "*"
+              origin: "*"
             },
             meta: {
               status: 401,
