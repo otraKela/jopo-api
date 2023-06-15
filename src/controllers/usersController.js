@@ -10,7 +10,7 @@ const obtainJwt = require ('../services/obtainJwt');
 const controller = {
 
   registration: async (req, res) => {
-console.log('en registration')
+console.log('req.body', req.body)
     if (!req.body) {
       return res.status(402).json(
         {
