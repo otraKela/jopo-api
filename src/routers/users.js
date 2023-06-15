@@ -8,7 +8,7 @@ const imageUploadMiddleware = require ('../middleware/imageUploadMiddleware.js')
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const corsOptions = {
-  origin: 'https://jopo-react.netlify.app/',
+  origin: 'https://jopo-react.netlify.app/registration',
   optionsSuccessStatus: 200 
 }
 
