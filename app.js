@@ -16,6 +16,13 @@ app.use(methodOverride('_method'));
 
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Permitir acceso desde cualquier origen
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE'); // Métodos permitidos
+  res.header('Access-Control-Allow-Headers', 'Content-Type'); // Encabezados permitidos
+  next();
+});
+
 const productsApiRouter = require('./src/routers/products.js');;
 const usersApiRouter= require('./src/routers/users.js')
 
