@@ -9,7 +9,6 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 
 const corsOptions = {
   origin: 'https://jopo-react.netlify.app/',
-  preflightContinue,
   optionsSuccessStatus: 200 
 }
 
