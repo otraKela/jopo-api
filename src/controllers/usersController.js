@@ -26,16 +26,21 @@ console.log('en registration')
       let newUser;
       let userImg;
 console.log('linea 28')
-      if (await db.Users.findOne({ where: { email: req.body.email } })) {
-        return res.status(401).json(
-          {
-            headers: { 'access-control-allow-origin': '*' },
-            meta: {
-              status: 401,
-              msg: "La dirección de mail ya se encuentra registrada"
-            }
-          });
-      };
+
+      try {
+        if (await db.Users.findOne({ where: { email: req.body.email } })) {
+          return res.status(401).json(
+            {
+              meta: {
+                status: 401,
+                msg: "La dirección de mail ya se encuentra registrada"
+              }
+            });
+        };
+      }
+      catch (error) {
+        console.log(error)
+      }
 console.log('linea 38')
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
