@@ -55,7 +55,7 @@ console.log('linea 47')
     try {
       newUser = await db.Users.create({
         first_name: req.body.firstName,
-        last_name: req.body.lastName,
+        last_name: req.body.lastName || '',
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
