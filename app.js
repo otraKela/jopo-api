@@ -30,8 +30,10 @@ const usersApiRouter= require('./src/routers/users.js')
 app.use ( '/products', productsApiRouter);
 app.use ( '/users', usersApiRouter);
 
-app.listen(process.env.PORT || 3040, () => {
-    console.log("Servidor corriendo en el puerto 3040");
+currentPort = process.env.PORT || 3040;
+
+app.listen(currentPort, () => {
+    console.log("Servidor corriendo en el puerto " +  currentPort);
 })
 
 

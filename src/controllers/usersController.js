@@ -11,6 +11,7 @@ const controller = {
 
   registration: async (req, res) => {
 console.log('req.body', req.body)
+    // Si no se ingresaron datos, devuelve error
     if (!req.body) {
       return res.status(402).json(
         {
@@ -21,36 +22,37 @@ console.log('req.body', req.body)
         });
     }
 
-    try {
-
-      let newUser;
-      let userImg;
+    let newUser;
+    let userImg;
 console.log('linea 28')
 
-      try {
-        if (await db.Users.findOne({ where: { email: req.body.email } })) {
-          return res.status(401).json(
-            {
-              meta: {
-                status: 401,
-                msg: "La dirección de mail ya se encuentra registrada"
-              }
-            });
-        };
-      }
-      catch (error) {
-        console.log(error)
-      }
+    try {
+      if (await db.Users.findOne({ where: { email: req.body.email } })) {
+        return res.status(401).json(
+          {
+            meta: {
+              status: 401,
+              msg: "La dirección de mail ya se encuentra registrada"
+            }
+          });
+      };
+    }
+    catch (error) {
+      console.log(error)
+    }
 console.log('linea 38')
-      const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-
-      // Si no se ingresó una imagen se asigna la imagen por defecto
-      if (req.body.img && !(req.body.img === null) && !(req.body.img === 'null') ) {
-        userImg = req.body.img;
-      } else {
-        userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
-      }
+    const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    
+    // Si no se ingresó una imagen se asigna la imagen por defecto
+    if (req.body.img && !(req.body.img === null) && !(req.body.img === 'null') ) {
+      userImg = req.body.img;
+    } else {
+      userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
+    }
+console.log('userImg', userImg)
 console.log('linea 47')
+
+    try {
       newUser = await db.Users.create({
         first_name: req.body.firstName,
         last_name: req.body.lastName,
@@ -61,30 +63,32 @@ console.log('linea 47')
         img: userImg,
         category_id: 2
       })
-console.log('linea 58')
-      if (await newUser) {
-
-        const token = obtainJwt (newUser);
-      
-        return res.status(200).json(
-          {
-            meta: {
-              status: 200,
-              msg: 'El registro del usuario ha sido completado'
-            },
-            jwt: token
-          })
-      } else {
-        return res.status(402).json(
-          {
-            meta: {
-              status: 402,
-              msg: `Ha ocurrido un error en el registro del usuario`
-            }
-          })
-      }
     }
-    catch { e => console.error(e) }
+    catch (error) {
+      console.log(error)
+    }
+console.log('linea 58')
+    if (await newUser) {
+
+      const token = obtainJwt (newUser);
+    
+      return res.status(200).json(
+        {
+          meta: {
+            status: 200,
+            msg: 'El registro del usuario ha sido completado'
+          },
+          jwt: token
+        })
+    } else {
+      return res.status(402).json(
+        {
+          meta: {
+            status: 402,
+            msg: `Ha ocurrido un error en el registro del usuario`
+          }
+        })
+    }
   },
 
   login: async (req, res) => {
