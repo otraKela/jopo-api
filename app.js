@@ -10,13 +10,13 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Aquí estoy disponiendo la posibilidad para utilizar el seteo en los formularios para el uso de los metodos put ó delete
+//Aquí estoy disponiendo la posibilidad para utilizar el seteo en los formularios para el usod e los metodos put ó delete
 app.use(methodOverride('_method'));
 
 app.use(cors());
 
-const productsApiRouter = require('./src/routers/products.js');;
-const usersApiRouter= require('./src/routers/users.js')
+const productsApiRouter = require('./src/routers/products.js');
+const usersApiRouter= require('./src/routers/users.js');
 
 // API routes
 app.use ( '/products', productsApiRouter);

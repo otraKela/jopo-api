@@ -6,8 +6,8 @@ const imageUploadMiddleware = require ('../middleware/imageUploadMiddleware.js')
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
-router.get ( '/', usersController.list );
-router.get ( '/:id', usersController.detail );
+// router.get ( '/', usersController.list );
+// router.get ( '/:id', usersController.detail );
 router.post ( '/login', usersController.login );
 
 if (nodeEnv === "development") {
