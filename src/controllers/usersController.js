@@ -10,10 +10,9 @@ const obtainJwt = require ('../services/obtainJwt');
 const controller = {
 
   registration: async (req, res) => {
-console.log('req.body', req.body)
+
     // Si no se ingresaron datos, devuelve error
     if (!req.body || req.body === {}) {
-console.log ('no hay req.body')
       return res.status(402).json(
         {
           meta: {
@@ -25,7 +24,6 @@ console.log ('no hay req.body')
 
     let newUser;
     let userImg;
-console.log('linea 28')
 
     try {
       if (await db.Users.findOne({ where: { email: req.body.email } })) {
@@ -41,7 +39,7 @@ console.log('linea 28')
     catch (error) {
       console.log(error)
     }
-console.log('linea 44')
+
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     
     // Si no se ingresó una imagen se asigna la imagen por defecto
@@ -50,8 +48,6 @@ console.log('linea 44')
     } else {
       userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
     }
-console.log('userImg', userImg)
-console.log('linea 54')
 
     try {
       newUser = await db.Users.create({
@@ -68,7 +64,7 @@ console.log('linea 54')
     catch (error) {
       console.log(error)
     }
-console.log('linea 71')
+
     if (await newUser) {
 
       const token = obtainJwt (newUser);
@@ -192,7 +188,6 @@ console.log('linea 71')
       })
       .catch(e => console.log(e))
   },
-
 
 }
 
