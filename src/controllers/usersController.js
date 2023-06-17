@@ -12,7 +12,7 @@ const controller = {
   registration: async (req, res) => {
 console.log('req.body', req.body)
     // Si no se ingresaron datos, devuelve error
-    if (!req.body || req.body === {}) {
+    if (!req.body || req.body == null || req.body == undefined) {
       return res.status(402).json(
         {
           meta: {
