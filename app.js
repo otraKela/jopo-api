@@ -16,8 +16,9 @@ app.use(methodOverride('_method'));
 
 app.use(cors({origin: 'https://jopo-react.netlify.app'}));
 
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // Permitir acceso desde cualquier origen
+  res.header('Access-Control-Allow-Origin', 'https://jopo-react.netlify.app'); // Permitir acceso desde cualquier origen
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE'); // Métodos permitidos
   res.header('Access-Control-Allow-Headers', 'Content-Type'); // Encabezados permitidos
   next();
