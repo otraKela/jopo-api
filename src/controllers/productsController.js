@@ -6,7 +6,7 @@ const controller = {
 
     list: (req, res) => {
 
-      // Accepts a query string with:
+      //  Accepts a query string with:
       //  page=N  returns page number N, considering 10 products per page
       //  search=KEYWORD  returns products containing KEYWORD in name, description, category name or color
       // With no query string, returns all products
