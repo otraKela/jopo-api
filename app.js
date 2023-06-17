@@ -17,6 +17,8 @@ app.use(methodOverride('_method'));
 
 
 // configuración de cors para poder acceder desde otros dominios
+app.use(cors());
+
 const corsOptions = {
   origin: ['http://localhost:3000', 'https://jopo-react.netlify.app'],
 }
@@ -25,7 +27,7 @@ const configuredCors = cors(corsOptions);
 
 app.options('*', configuredCors)
 
-app.use(cors());
+
 
 
 // app.use((req, res, next) => {
