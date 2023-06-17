@@ -126,68 +126,68 @@ const controller = {
     catch { e => console.error(e) }
   },
 
-  list: (req, res) => {
-    let usersArray = [];
-    db.Users.findAll()
-      .then(users => {
-        users.forEach(user => {
-          let data = {
-            id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            phone: user.phone,
-            date_birth: user.date_birth,
-            img: user.img,
-            category_id: user.category_id,
-            url: 'http://localhost:3040/users/' + user.id
-          }
-          usersArray.push(data)
-        });
+  // list: (req, res) => {
+  //   let usersArray = [];
+  //   db.Users.findAll()
+  //     .then(users => {
+  //       users.forEach(user => {
+  //         let data = {
+  //           id: user.id,
+  //           first_name: user.first_name,
+  //           last_name: user.last_name,
+  //           email: user.email,
+  //           phone: user.phone,
+  //           date_birth: user.date_birth,
+  //           img: user.img,
+  //           category_id: user.category_id,
+  //           url: 'http://localhost:3040/users/' + user.id
+  //         }
+  //         usersArray.push(data)
+  //       });
 
-        const count = usersArray.length;
+  //       const count = usersArray.length;
 
-        return res.json({
-          meta: {
-            status: 200,
-            url: 'http://localhost:3040/users/',
-          },
+  //       return res.json({
+  //         meta: {
+  //           status: 200,
+  //           url: 'http://localhost:3040/users/',
+  //         },
 
-          data: {
-            count: count,
-            users: usersArray
-          }
-        });
-      })
-      .catch(e => console.log(e))
-  },
+  //         data: {
+  //           count: count,
+  //           users: usersArray
+  //         }
+  //       });
+  //     })
+  //     .catch(e => console.log(e))
+  // },
 
-  detail: (req, res) => {
-    db.Users.findByPk(req.params.id)
-      .then(user => {
-        let data = {
-          id: user.id,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          phone: user.phone,
-          date_birth: user.date_birth,
-          img: user.img,
-          category_id: user.category_id
-        }
-        return res.status(200).json(
-          {
-            meta: {
-              status: 200,
-              url: 'http://localhost:3040/users/:' + req.params.id,
-              user_id: req.params.id,
-            },
-            data: data
-          }
-        )
-      })
-      .catch(e => console.log(e))
-  },
+  // detail: (req, res) => {
+  //   db.Users.findByPk(req.params.id)
+  //     .then(user => {
+  //       let data = {
+  //         id: user.id,
+  //         first_name: user.first_name,
+  //         last_name: user.last_name,
+  //         email: user.email,
+  //         phone: user.phone,
+  //         date_birth: user.date_birth,
+  //         img: user.img,
+  //         category_id: user.category_id
+  //       }
+  //       return res.status(200).json(
+  //         {
+  //           meta: {
+  //             status: 200,
+  //             url: 'http://localhost:3040/users/:' + req.params.id,
+  //             user_id: req.params.id,
+  //           },
+  //           data: data
+  //         }
+  //       )
+  //     })
+  //     .catch(e => console.log(e))
+  // },
 
 }
 
