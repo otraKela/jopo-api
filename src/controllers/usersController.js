@@ -41,7 +41,7 @@ console.log('linea 28')
     catch (error) {
       console.log(error)
     }
-console.log('linea 38')
+console.log('linea 44')
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     
     // Si no se ingresó una imagen se asigna la imagen por defecto
@@ -51,7 +51,7 @@ console.log('linea 38')
       userImg = envVariables[nodeEnv].DEFAULT_USER_IMAGE;  
     }
 console.log('userImg', userImg)
-console.log('linea 47')
+console.log('linea 54')
 
     try {
       newUser = await db.Users.create({
@@ -68,7 +68,7 @@ console.log('linea 47')
     catch (error) {
       console.log(error)
     }
-console.log('linea 58')
+console.log('linea 71')
     if (await newUser) {
 
       const token = obtainJwt (newUser);
