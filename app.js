@@ -14,7 +14,7 @@ app.use(express.json());
 //Aquí estoy disponiendo la posibilidad para utilizar el seteo en los formularios para el usod e los metodos put ó delete
 app.use(methodOverride('_method'));
 
-app.use(cors({origin: 'https://jopo-react.netlify.app'}));
+app.use(cors({origin: 'https://jopo-react.netlify.app/registration'}));
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*'); // Permitir acceso desde cualquier origen
